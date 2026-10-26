@@ -19,6 +19,9 @@ a:hover { color: #f97316; }
 .hero-art:before { width:340px; height:340px; right:-80px; top:-80px; }
 .hero-art:after { width:240px; height:240px; left:-90px; bottom:-90px; }
 .hero-person { position:absolute; inset:0; margin:auto; width:210px; height:270px; border-radius:110px 110px 34px 34px; background:#fff; display:flex; flex-direction:column; align-items:center; justify-content:center; box-shadow:0 30px 50px #d47e3a22; }
-.field { min-height:48px; width:100%; border:1px solid #e7e5e4; border-radius:14px; background:#fff; padding:0 14px; color:#334155; outline:none; }
+.field { min-height:48px; width:100%; border:1px solid #e7e5e4; border-radius:14px; background:#fff; padding:0 14px; color:#334155; outline:none; font-size:16px; }
 .field:focus { border-color:#f97316; box-shadow:0 0 0 3px #f9731622; }
+details > summary { list-style: none; }
+details > summary::-webkit-details-marker { display: none; }
+details[open] > summary .chevron { transform: rotate(180deg); color: #f97316; }
 ::selection { background:#fed7aa; color:#7c2d12; }

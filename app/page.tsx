@@ -1,29 +1,331 @@
-'use client'
-import * as React from 'react'
-import { ArrowRight, Award, BookOpen, Check, ChevronRight, Clock3, GraduationCap, HeartHandshake, Menu, MessageCircle, Phone, Play, ShieldCheck, Star, Users, X, Zap } from 'lucide-react'
-import { siteConfig } from '@/config/site'
+import type { Metadata } from 'next'
+import { ArrowRight, Award, BookOpen, Check, ChevronRight, Clock3, GraduationCap, HeartHandshake, MessageCircle, Play, ShieldCheck, Star, Zap } from 'lucide-react'
 import { subjects, tutors, testimonials, faqs, news } from '@/data/content'
 import { Button } from '@/components/ui/button'
-import { Dialog, DialogClose, DialogTitle } from '@/components/ui/dialog'
 import { Accordion, AccordionItem } from '@/components/ui/accordion'
+import { RequestForm } from '@/components/request-form'
 
-const features = [[ShieldCheck,'Sàng lọc kỹ lưỡng','100% gia sư có hồ sơ và bằng cấp xác minh'],[BookOpen,'Giáo trình cá nhân hóa','Lộ trình riêng theo năng lực và mục tiêu'],[MessageCircle,'Báo cáo hàng tuần','Phụ huynh luôn nắm được tiến độ của con'],[Clock3,'Lịch học linh hoạt','Chủ động chọn thời gian và hình thức học'],[HeartHandshake,'Học thử miễn phí','Trải nghiệm trước khi đưa ra quyết định'],[Zap,'Hỗ trợ 24/7','Đồng hành nhanh chóng trong suốt hành trình']]
+export const metadata: Metadata = {
+  alternates: { canonical: '/' },
+  openGraph: { url: '/' },
+}
 
-function SectionTitle({eyebrow,title,description,light=false}:{eyebrow:string;title:string;description?:string;light?:boolean}) { return <div className="mx-auto mb-12 max-w-2xl text-center"><p className={light?'text-orange-200':'text-orange-600'}>{eyebrow}</p><h2 className={light?'text-white':'text-slate-900'}>{title}</h2>{description&&<p className={light?'text-orange-50/80':'text-slate-500'}>{description}</p>}</div> }
-function RequestForm() { const [done,setDone]=React.useState(false); const [phone,setPhone]=React.useState(''); const [error,setError]=React.useState(''); function submit(e:React.FormEvent){e.preventDefault(); if(!/^0\d{9,10}$/.test(phone.replace(/\s/g,''))){setError('Vui lòng nhập số điện thoại hợp lệ');return} setDone(true)} return <div className="rounded-3xl bg-white p-5 shadow-2xl shadow-orange-900/10 sm:p-7"><div className="mb-5 flex items-center gap-3"><div className="flex size-11 items-center justify-center rounded-2xl bg-orange-100 text-orange-600"><Phone /></div><div><h3 className="text-lg font-extrabold">Nhận tư vấn miễn phí</h3><p className="text-sm text-slate-500">Để lại thông tin, chúng tôi gọi lại trong 15 phút</p></div></div>{done?<div className="rounded-2xl bg-emerald-50 p-6 text-center text-emerald-800"><Check className="mx-auto mb-2"/><strong>Đã nhận yêu cầu!</strong><p className="mt-1 text-sm">Gia Sư PML sẽ liên hệ với bạn sớm nhất.</p></div>:<form onSubmit={submit} className="grid gap-3 sm:grid-cols-2"><input required placeholder="Tên phụ huynh / học viên" className="field"/><input required value={phone} onChange={e=>setPhone(e.target.value)} placeholder="Số điện thoại" className="field"/><select className="field"><option>Lớp của học viên</option><option>Tiểu học</option><option>THCS</option><option>THPT</option><option>Luyện thi đại học</option></select><select className="field"><option>Môn học cần tìm</option>{subjects.map(s=><option key={s.name}>{s.name}</option>)}</select><select className="field"><option>Hình thức học</option><option>Tại nhà</option><option>Online 1-1</option></select><Button size="lg" className="w-full">Nhận tư vấn miễn phí <ArrowRight /></Button>{error&&<p className="col-span-full text-sm text-red-500">{error}</p>}</form>}</div> }
-export default function Page(){ const [menu,setMenu]=React.useState(false); const [selected,setSelected]=React.useState<typeof tutors[number]|null>(null); const [selectedNews,setSelectedNews]=React.useState<typeof news[number]|null>(null); return <main className="overflow-hidden bg-[#fffaf5] text-slate-700">
-<header className="relative z-20 bg-white"><div className="hidden border-b border-orange-100 bg-[#fffaf5] sm:block"><div className="container flex h-9 items-center justify-between text-xs text-slate-500"><span>Học thử miễn phí · Ghép gia sư trong 24h</span><span className="flex gap-5"><span>☎ {siteConfig.hotline}</span><span>✉ {siteConfig.email}</span></span></div></div><div className="container flex h-[76px] items-center justify-between"><a href="#top" className="flex items-center gap-2 font-black text-slate-900"><span className="flex size-10 items-center justify-center rounded-xl bg-orange-500 text-xl text-white">✦</span><span className="text-lg">Gia Sư <span className="text-orange-500">PML</span></span></a><nav className="hidden items-center gap-7 lg:flex">{siteConfig.nav.map(([n,h])=><a key={h} href={h} className="text-sm font-semibold hover:text-orange-500">{n}</a>)}</nav><div className="hidden sm:block"><Button onClick={()=>document.getElementById('dang-ky')?.scrollIntoView({behavior:'smooth'})}>Tìm gia sư ngay <ArrowRight /></Button></div><button className="rounded-lg p-2 lg:hidden" aria-label="Mở menu" onClick={()=>setMenu(!menu)}>{menu?<X/>:<Menu/>}</button></div>{menu&&<nav className="absolute left-0 right-0 top-full flex flex-col gap-1 border-t bg-white p-4 shadow-xl lg:hidden">{siteConfig.nav.map(([n,h])=><a onClick={()=>setMenu(false)} key={h} href={h} className="rounded-xl px-4 py-3 font-semibold hover:bg-orange-50">{n}</a>)}<Button className="mt-2">Tìm gia sư ngay</Button></nav>}</header>
-<section id="top" className="hero-bg relative"><div className="container grid items-center gap-12 py-16 lg:grid-cols-[1.1fr_.9fr] lg:py-24"><div><div className="mb-5 inline-flex items-center gap-2 rounded-full bg-orange-100 px-4 py-2 text-sm font-bold text-orange-700"><span className="size-2 rounded-full bg-orange-500"/> Đồng hành cùng 5.000+ gia đình</div><h1>Tìm gia sư phù hợp.<br/><span className="text-orange-500">Con tiến bộ rõ rệt.</span></h1><p className="mt-6 max-w-xl text-lg leading-8 text-slate-600">Kết nối với gia sư chất lượng cao, được tuyển chọn kỹ lưỡng — học đúng phương pháp, tiến bộ bền vững.</p><div className="mt-8 flex flex-wrap gap-3"><Button size="lg" onClick={()=>document.getElementById('dang-ky')?.scrollIntoView({behavior:'smooth'})}>Đăng ký tìm gia sư <ArrowRight /></Button><Button size="lg" variant="outline"><Play data-icon="inline-start"/> Xem gia sư tiêu biểu</Button></div><div className="mt-9 grid max-w-lg grid-cols-2 gap-3 text-sm font-semibold text-slate-600 sm:grid-cols-4"><span className="flex items-center gap-2"><Check className="text-orange-500"/> Hồ sơ xác minh</span><span className="flex items-center gap-2"><Check className="text-orange-500"/> Học thử miễn phí</span><span className="flex items-center gap-2"><Check className="text-orange-500"/> Đổi gia sư miễn phí</span><span className="flex items-center gap-2"><Check className="text-orange-500"/> Hỗ trợ 24/7</span></div></div><div className="relative"><div className="hero-art"><img src="/images/gia-su-pml-hero.png" alt="Gia sư PML đang hướng dẫn học viên" className="absolute inset-0 size-full object-cover opacity-90"/><div className="absolute inset-0 bg-gradient-to-t from-orange-950/20 via-transparent to-white/10"/><div className="absolute -left-5 top-8 rounded-2xl bg-white p-4 shadow-xl"><div className="flex items-center gap-3"><div className="flex size-10 items-center justify-center rounded-full bg-emerald-100 text-emerald-600"><Award/></div><div><strong className="block text-sm">Gia sư hàng đầu</strong><span className="text-xs text-slate-400">Được phụ huynh tin chọn</span></div></div></div><div className="absolute -bottom-5 -right-4 rounded-2xl bg-slate-900 p-4 text-white shadow-xl"><strong className="block text-2xl">98%</strong><span className="text-xs text-slate-300">Hài lòng sau học thử</span></div><div className="hero-person"><GraduationCap className="size-24 text-orange-500"/><div className="mt-3 h-3 w-28 rounded-full bg-orange-200"/><div className="mt-2 h-2 w-20 rounded-full bg-slate-200"/></div></div></div></div><div id="dang-ky" className="container relative z-10 -mb-16"><RequestForm/></div></section>
-<section id="mon-hoc" className="container py-28"><SectionTitle eyebrow="MÔN HỌC & CẤP LỚP" title="Học gì cũng có gia sư giỏi" description="Từ kiến thức nền tảng đến luyện thi chuyên sâu, chúng tôi tìm đúng ng��ời thầy cho mục tiêu của bạn."/><div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">{subjects.map(s=><a href="#dang-ky" key={s.name} className="group rounded-3xl border border-orange-100 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-xl hover:shadow-orange-100"><div className={'mb-5 flex size-14 items-center justify-center rounded-2xl text-xl font-black '+(s.color==='orange'?'bg-orange-100 text-orange-600':s.color==='blue'?'bg-blue-100 text-blue-600':s.color==='teal'?'bg-teal-100 text-teal-600':s.color==='purple'?'bg-purple-100 text-purple-600':s.color==='rose'?'bg-rose-100 text-rose-600':'bg-yellow-100 text-yellow-600')}>{s.icon}</div><div className="flex items-center justify-between"><div><h3>{s.name}</h3><p className="mt-1 text-sm text-slate-500">{s.levels}</p></div><ChevronRight className="text-orange-400 transition group-hover:translate-x-1"/></div></a>)}</div></section>
-<section id="gioi-thieu" className="bg-white py-24"><div className="container"><SectionTitle eyebrow="VÌ SAO CHỌN SAO VIỆT" title="Mỗi giờ học đều đáng giá" description="Chúng tôi không chỉ tìm gia sư, mà xây dựng một hành trình học tập phù hợp cho từng học viên."/><div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">{features.map(([Icon,title,desc])=><div key={title as string} className="rounded-3xl bg-[#fffaf5] p-6"><div className="mb-5 flex size-11 items-center justify-center rounded-xl bg-orange-100 text-orange-600"><Icon/></div><h3>{title as string}</h3><p className="mt-2 text-sm leading-6 text-slate-500">{desc as string}</p></div>)}</div></div></section>
-<section className="container py-24"><SectionTitle eyebrow="QUY TRÌNH ĐƠN GIẢN" title="Bắt đầu chỉ với 4 bước"/><div className="grid gap-6 md:grid-cols-4">{[['01','Gửi yêu cầu','Chia sẻ mục tiêu và lịch học mong muốn'],['02','Tư vấn & ghép gia sư','Nhận đề xuất phù hợp trong 24 giờ'],['03','Học thử miễn phí','Trải nghiệm một buổi học thực tế'],['04','Học chính thức','Theo dõi tiến độ cùng Gia Sư PML']].map(([n,t,d])=><div key={n} className="relative text-center"><div className="mx-auto mb-5 flex size-16 items-center justify-center rounded-full bg-orange-500 text-lg font-black text-white shadow-lg shadow-orange-200">{n}</div><h3>{t}</h3><p className="mt-2 text-sm leading-6 text-slate-500">{d}</p></div>)}</div></section>
-<section id="gia-su" className="bg-[#fff1e4] py-24"><div className="container"><SectionTitle eyebrow="ĐỘI NGŨ GIA SƯ" title="Những người thầy truyền cảm hứng" description="Tận tâm, giỏi chuyên môn và luôn biết cách giúp học viên yêu việc học."/><div className="grid gap-5 md:grid-cols-2 lg:grid-cols-4">{tutors.map(t=><div key={t.name} className="overflow-hidden rounded-3xl bg-white shadow-sm"><div className="relative flex h-48 items-center justify-center bg-orange-100"><img src={t.image} alt={t.name} className="size-32 rounded-full object-cover ring-8 ring-white/60"/><span className="absolute right-3 top-3 rounded-full bg-white px-3 py-1 text-xs font-bold text-orange-600">{t.tag}</span></div><div className="p-5"><div className="flex items-start justify-between gap-2"><div><h3 className="text-lg">{t.name}</h3><p className="mt-1 text-sm font-semibold text-orange-600">{t.subject}</p></div><span className="flex items-center gap-1 text-sm font-bold"><Star className="size-4 fill-yellow-400 text-yellow-400"/>{t.rating}</span></div><p className="mt-3 text-sm text-slate-500">{t.school}<br/>{t.experience}</p><div className="mt-4 flex items-center justify-between border-t border-slate-100 pt-4"><span className="text-sm">Từ <strong>{t.price}</strong><br/><small className="text-slate-400">/ buổi</small></span><Button size="sm" variant="outline" onClick={()=>setSelected(t)}>Xem hồ sơ</Button></div></div></div>)}</div></div></section>
-<section id="hoc-phi" className="container py-24"><SectionTitle eyebrow="HỌC PHÍ THAM KHẢO" title="Đầu tư xứng đáng cho tương lai" description="Mức phí linh hoạt theo môn học, cấp lớp và hình thức học. Đăng ký gói tháng tiết kiệm đến 15%."/><div className="grid gap-5 md:grid-cols-3">{[['Tiểu học','120.000 – 180.000đ','/ buổi 90 phút'],['THCS','150.000 – 220.000đ','/ buổi 90 phút'],['THPT & Luyện thi','180.000 – 350.000đ','/ buổi 120 phút']].map(([a,b,c],i)=><div key={a} className={'rounded-3xl border p-7 '+(i===1?'border-orange-400 bg-orange-500 text-white shadow-xl shadow-orange-200':'border-orange-100 bg-white')}><p className={i===1?'text-orange-100':'text-orange-600'}>{a}</p><div className="my-5 text-3xl font-black">{b}</div><p className={i===1?'text-orange-100':'text-slate-500'}>{c}</p><div className="my-6 h-px bg-current opacity-10"/><p className="flex gap-2 text-sm"><Check/> Tại nhà hoặc online 1-1</p><p className="mt-3 flex gap-2 text-sm"><Check/> Học thử miễn phí</p><Button className="mt-7 w-full" variant={i===1?'dark':'outline'}>Nhận báo giá phù hợp</Button></div>)}</div></section>
-<section className="bg-slate-900 py-24 text-white"><div className="container"><SectionTitle light eyebrow="NHỮNG CON SỐ BIẾT NÓI" title="Cùng con tạo nên bước tiến mới"/><div className="grid grid-cols-2 gap-8 text-center lg:grid-cols-4">{[['5.000+','Học viên đồng hành'],['300+','Gia sư chất lượng'],['2.4 điểm','Tăng trung bình'],['98%','Phụ huynh hài lòng']].map(([n,l])=><div key={l}><strong className="text-4xl font-black text-orange-400 sm:text-5xl">{n}</strong><p className="mt-2 text-sm text-slate-300">{l}</p></div>)}</div></div></section>
-<section className="container py-24"><SectionTitle eyebrow="CẢM NHẬN" title="Phụ huynh nói gì về Gia Sư PML"/><div className="grid gap-5 md:grid-cols-2">{testimonials.map(t=><div key={t.name} className="rounded-3xl border border-orange-100 bg-white p-7 shadow-sm"><div className="mb-5 flex gap-1 text-yellow-400">{[1,2,3,4,5].map(i=><Star key={i} className="size-4 fill-current"/>)}</div><p className="text-lg leading-8 text-slate-700">“{t.quote}”</p><div className="mt-6 flex items-center gap-3"><img src={t.image} alt="" className="size-11 rounded-full object-cover"/><div><strong className="block">{t.name}</strong><span className="text-sm text-slate-500">{t.detail}</span></div></div></div>)}</div></section>
-<section className="bg-white py-24"><div className="container"><SectionTitle eyebrow="HỎI ĐÁP" title="Bạn đang băn khoăn điều gì?"/><div className="mx-auto max-w-3xl rounded-3xl border border-orange-100 bg-[#fffaf5] px-6"><Accordion>{faqs.map(([q,a])=><AccordionItem key={q} question={q}>{a}</AccordionItem>)}</Accordion></div></div></section>
-<section id="tin-tuc" className="container py-24"><SectionTitle eyebrow="TIN TỨC & KINH NGHIỆM" title="Góc học tập cho cả nhà"/><div className="grid gap-5 md:grid-cols-3">{news.map((item,i)=><article key={item.title} className="overflow-hidden rounded-3xl bg-white shadow-sm"><div className={'flex h-44 items-center justify-center text-5xl '+(i===0?'bg-orange-100':i===1?'bg-blue-100':'bg-teal-100')}>{i===0?'✎':i===1?'★':'◌'}</div><div className="p-5"><span className="text-xs font-bold uppercase text-orange-600">{item.category} · {item.date}</span><h3 className="mt-3 leading-7">{item.title}</h3><p className="mt-2 text-sm leading-6 text-slate-500">{item.excerpt}</p><button className="mt-4 inline-flex items-center gap-1 text-sm font-bold text-orange-600" onClick={()=>setSelectedNews(item)}>Đọc tiếp <ArrowRight className="size-4"/></button></div></article>)}</div></section>
-<section className="bg-orange-500 py-16"><div className="container flex flex-col items-start justify-between gap-7 md:flex-row md:items-center"><div><p className="font-bold text-orange-100">SẴN SÀNG ĐỂ CON TIẾN BỘ?</p><h2 className="mt-2 text-white">Để lại thông tin — nhận tư vấn<br className="hidden sm:block"/> và học thử miễn phí</h2></div><Button variant="dark" size="lg" onClick={()=>document.getElementById('dang-ky')?.scrollIntoView({behavior:'smooth'})}>Đăng ký ngay <ArrowRight/></Button></div></section>
-<footer id="lien-he" className="bg-slate-950 py-14 text-slate-300"><div className="container grid gap-10 md:grid-cols-[1.4fr_1fr_1fr_1.2fr]"><div><div className="flex items-center gap-2 text-lg font-black text-white"><span className="flex size-9 items-center justify-center rounded-xl bg-orange-500">✦</span>Gia Sư <span className="text-orange-500">Gia Sư PML</span></div><p className="mt-4 max-w-xs text-sm leading-7">Kết nối gia đình với những người thầy tận tâm, để mỗi ngày học là một ngày tiến bộ.</p></div><div><h4 className="mb-4 text-white">Khám phá</h4><div className="flex flex-col gap-3 text-sm"><a href="#gioi-thieu">Về chúng tôi</a><a href="#mon-hoc">Môn học</a><a href="#gia-su">Đội ngũ gia sư</a><a href="#hoc-phi">Học phí</a></div></div><div><h4 className="mb-4 text-white">Hỗ trợ</h4><div className="flex flex-col gap-3 text-sm"><a href="#">Chính sách bảo mật</a><a href="#">Điều khoản dịch vụ</a><a href="#">Tuyển dụng gia sư</a><a href="#">Câu hỏi thường gặp</a></div></div><div><h4 className="mb-4 text-white">Liên hệ</h4><p className="text-sm leading-7">Hotline: <strong className="text-orange-400">{siteConfig.hotline}</strong><br/>{siteConfig.email}<br/>{siteConfig.address}</p></div></div><div className="container mt-12 border-t border-white/10 pt-6 text-xs text-slate-500">© 2024 Gia Sư Gia Sư PML. All rights reserved.</div></footer>
-<div className="fixed bottom-5 right-5 z-30 flex flex-col gap-3"><a href={'tel:'+siteConfig.hotline.replaceAll(' ','')} className="flex size-12 items-center justify-center rounded-full bg-orange-500 text-white shadow-lg shadow-orange-500/30" aria-label="Gọi ngay"><Phone/></a><a href="#dang-ky" className="flex size-12 items-center justify-center rounded-full bg-emerald-500 text-white shadow-lg" aria-label="Nhắn Zalo"><MessageCircle/></a></div>
-<Dialog open={!!selected} onOpenChange={()=>setSelected(null)}>{selected&&<div className="relative pt-2"><DialogClose onClick={()=>setSelected(null)}/><div className="flex items-center gap-4"><img src={selected.image} alt={selected.name} className="size-20 rounded-2xl object-cover"/><div><DialogTitle>{selected.name}</DialogTitle><p className="mt-1 text-orange-600">{selected.subject}</p></div></div><div className="mt-6 grid gap-4 text-sm text-slate-600"><p><strong className="text-slate-900">Giới thiệu:</strong> Gia sư tận tâm, luôn xây dựng lộ trình phù hợp với năng lực và mục tiêu riêng của từng học viên.</p><p><strong className="text-slate-900">Kinh nghiệm:</strong> {selected.experience}. Được phụ huynh đánh giá {selected.rating}/5 sao.</p><p><strong className="text-slate-900">Lịch rảnh:</strong> Thứ 2–6 (18:00–21:00), cuối tuần linh hoạt.</p></div><Button className="mt-7 w-full" onClick={()=>{setSelected(null);document.getElementById('dang-ky')?.scrollIntoView({behavior:'smooth'})}}>Mời dạy thử miễn phí <ArrowRight/></Button></div>}</Dialog><Dialog open={!!selectedNews} onOpenChange={()=>setSelectedNews(null)}>{selectedNews&&<div className="relative pt-2"><DialogClose onClick={()=>setSelectedNews(null)}/><span className="text-xs font-bold uppercase text-orange-600">{selectedNews.category} · {selectedNews.date}</span><DialogTitle className="mt-3 text-2xl leading-tight">{selectedNews.title}</DialogTitle><p className="mt-4 text-base leading-8 text-slate-600">{selectedNews.body}</p><Button className="mt-7 w-full" onClick={()=>{setSelectedNews(null);document.getElementById('dang-ky')?.scrollIntoView({behavior:'smooth'})}}>Tìm gia sư phù hợp <ArrowRight/></Button></div>}</Dialog></main> }
+const features = [
+  { icon: ShieldCheck, title: 'Sàng lọc kỹ lưỡng', description: '100% gia sư có hồ sơ và bằng cấp xác minh' },
+  { icon: BookOpen, title: 'Giáo trình cá nhân hóa', description: 'Lộ trình riêng theo năng lực và mục tiêu' },
+  { icon: MessageCircle, title: 'Báo cáo hàng tuần', description: 'Phụ huynh luôn nắm được tiến độ của con' },
+  { icon: Clock3, title: 'Lịch học linh hoạt', description: 'Chủ động chọn thời gian và hình thức học' },
+  { icon: HeartHandshake, title: 'Học thử miễn phí', description: 'Trải nghiệm trước khi đưa ra quyết định' },
+  { icon: Zap, title: 'Hỗ trợ 24/7', description: 'Đồng hành nhanh chóng trong suốt hành trình' },
+]
+
+const steps = [
+  ['01', 'Gửi yêu cầu', 'Chia sẻ mục tiêu và lịch học mong muốn'],
+  ['02', 'Tư vấn & ghép gia sư', 'Nhận đề xuất phù hợp trong 24 giờ'],
+  ['03', 'Học thử miễn phí', 'Trải nghiệm một buổi học thực tế'],
+  ['04', 'Học chính thức', 'Theo dõi tiến độ cùng Gia Sư PML'],
+]
+
+const plans = [
+  { name: 'Tiểu học', price: '120.000 – 180.000đ', unit: '/ buổi 90 phút', featured: false },
+  { name: 'THCS', price: '150.000 – 220.000đ', unit: '/ buổi 90 phút', featured: true },
+  { name: 'THPT & Luyện thi', price: '180.000 – 350.000đ', unit: '/ buổi 120 phút', featured: false },
+]
+
+const stats = [
+  ['5.000+', 'Học viên đồng hành'],
+  ['300+', 'Gia sư chất lượng'],
+  ['2.4 điểm', 'Tăng trung bình'],
+  ['98%', 'Phụ huynh hài lòng'],
+]
+
+const subjectTone: Record<string, string> = {
+  orange: 'bg-orange-100 text-orange-600',
+  blue: 'bg-blue-100 text-blue-600',
+  teal: 'bg-teal-100 text-teal-600',
+  purple: 'bg-purple-100 text-purple-600',
+  rose: 'bg-rose-100 text-rose-600',
+  yellow: 'bg-yellow-100 text-yellow-600',
+}
+
+function SectionTitle({ eyebrow, title, description, light = false }: { eyebrow: string; title: string; description?: string; light?: boolean }) {
+  return (
+    <div className="mx-auto mb-12 max-w-2xl text-center">
+      <p className={light ? 'text-orange-200' : 'text-orange-600'}>{eyebrow}</p>
+      <h2 className={light ? 'text-white' : 'text-slate-900'}>{title}</h2>
+      {description ? <p className={light ? 'text-orange-50/80' : 'text-slate-500'}>{description}</p> : null}
+    </div>
+  )
+}
+
+export default function Page() {
+  return (
+    <main className="overflow-hidden bg-[#fffaf5] text-slate-700">
+      <section id="top" className="hero-bg relative">
+        <div className="container grid items-center gap-12 py-16 lg:grid-cols-[1.1fr_.9fr] lg:py-24">
+          <div>
+            <div className="mb-5 inline-flex items-center gap-2 rounded-full bg-orange-100 px-4 py-2 text-sm font-bold text-orange-700">
+              <span className="size-2 rounded-full bg-orange-500" /> Đồng hành cùng 5.000+ gia đình
+            </div>
+            <h1>
+              Tìm gia sư phù hợp.
+              <br />
+              <span className="text-orange-500">Con tiến bộ rõ rệt.</span>
+            </h1>
+            <p className="mt-6 max-w-xl text-lg leading-8 text-slate-600">Kết nối với gia sư chất lượng cao, được tuyển chọn kỹ lưỡng — học đúng phương pháp, tiến bộ bền vững.</p>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <Button size="lg" href="/#dang-ky">
+                Đăng ký tìm gia sư <ArrowRight aria-hidden />
+              </Button>
+              <Button size="lg" variant="outline" href="/#gia-su">
+                <Play aria-hidden /> Xem gia sư tiêu biểu
+              </Button>
+            </div>
+            <div className="mt-9 grid max-w-lg grid-cols-2 gap-3 text-sm font-semibold text-slate-600 sm:grid-cols-4">
+              <span className="flex items-center gap-2"><Check className="text-orange-500" aria-hidden /> Hồ sơ xác minh</span>
+              <span className="flex items-center gap-2"><Check className="text-orange-500" aria-hidden /> Học thử miễn phí</span>
+              <span className="flex items-center gap-2"><Check className="text-orange-500" aria-hidden /> Đổi gia sư miễn phí</span>
+              <span className="flex items-center gap-2"><Check className="text-orange-500" aria-hidden /> Hỗ trợ 24/7</span>
+            </div>
+          </div>
+          <div className="relative">
+            <div className="hero-art">
+              <img src="/images/gia-su-pml-hero.png" alt="Gia sư PML đang hướng dẫn học viên" className="absolute inset-0 size-full object-cover opacity-90" />
+              <div className="absolute inset-0 bg-gradient-to-t from-orange-950/20 via-transparent to-white/10" />
+              <div className="absolute -left-5 top-8 hidden rounded-2xl bg-white p-4 shadow-xl sm:block">
+                <div className="flex items-center gap-3">
+                  <div className="flex size-10 items-center justify-center rounded-full bg-emerald-100 text-emerald-600">
+                    <Award aria-hidden />
+                  </div>
+                  <div>
+                    <strong className="block text-sm">Gia sư hàng đầu</strong>
+                    <span className="text-xs text-slate-400">Được phụ huynh tin chọn</span>
+                  </div>
+                </div>
+              </div>
+              <div className="absolute -bottom-5 -right-4 hidden rounded-2xl bg-slate-900 p-4 text-white shadow-xl sm:block">
+                <strong className="block text-2xl">98%</strong>
+                <span className="text-xs text-slate-300">Hài lòng sau học thử</span>
+              </div>
+              <div className="hero-person">
+                <GraduationCap className="size-24 text-orange-500" aria-hidden />
+                <div className="mt-3 h-3 w-28 rounded-full bg-orange-200" />
+                <div className="mt-2 h-2 w-20 rounded-full bg-slate-200" />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="dang-ky" className="container relative z-10 -mb-16">
+          <RequestForm />
+        </div>
+      </section>
+
+      <section id="mon-hoc" className="container py-28">
+        <SectionTitle eyebrow="MÔN HỌC & CẤP LỚP" title="Học gì cũng có gia sư giỏi" description="Từ kiến thức nền tảng đến luyện thi chuyên sâu, chúng tôi tìm đúng người thầy cho mục tiêu của bạn." />
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {subjects.map((subject) => (
+            <a key={subject.name} href="/#dang-ky" className="group rounded-3xl border border-orange-100 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-xl hover:shadow-orange-100">
+              <div className={`mb-5 flex size-14 items-center justify-center rounded-2xl text-xl font-black ${subjectTone[subject.color] ?? subjectTone.orange}`}>{subject.icon}</div>
+              <div className="flex items-center justify-between">
+                <div>
+                  <h3>{subject.name}</h3>
+                  <p className="mt-1 text-sm text-slate-500">{subject.levels}</p>
+                </div>
+                <ChevronRight className="text-orange-400 transition group-hover:translate-x-1" aria-hidden />
+              </div>
+            </a>
+          ))}
+        </div>
+      </section>
+
+      <section id="gioi-thieu" className="bg-white py-24">
+        <div className="container">
+          <SectionTitle eyebrow="VÌ SAO CHỌN GIA SƯ PML" title="Mỗi giờ học đều đáng giá" description="Chúng tôi không chỉ tìm gia sư, mà xây dựng một hành trình học tập phù hợp cho từng học viên." />
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {features.map((feature) => {
+              const Icon = feature.icon
+              return (
+              <div key={feature.title} className="rounded-3xl bg-[#fffaf5] p-6">
+                <div className="mb-5 flex size-11 items-center justify-center rounded-xl bg-orange-100 text-orange-600">
+                  <Icon aria-hidden />
+                </div>
+                <h3>{feature.title}</h3>
+                <p className="mt-2 text-sm leading-6 text-slate-500">{feature.description}</p>
+              </div>
+              )
+            })}
+          </div>
+        </div>
+      </section>
+
+      <section className="container py-24">
+        <SectionTitle eyebrow="QUY TRÌNH ĐƠN GIẢN" title="Bắt đầu chỉ với 4 bước" />
+        <div className="grid gap-6 md:grid-cols-4">
+          {steps.map(([number, title, description]) => (
+            <div key={number} className="relative text-center">
+              <div className="mx-auto mb-5 flex size-16 items-center justify-center rounded-full bg-orange-500 text-lg font-black text-white shadow-lg shadow-orange-200">{number}</div>
+              <h3>{title}</h3>
+              <p className="mt-2 text-sm leading-6 text-slate-500">{description}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section id="gia-su" className="bg-[#fff1e4] py-24">
+        <div className="container">
+          <SectionTitle eyebrow="ĐỘI NGŨ GIA SƯ" title="Những người thầy truyền cảm hứng" description="Tận tâm, giỏi chuyên môn và luôn biết cách giúp học viên yêu việc học." />
+          <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-4">
+            {tutors.map((tutor) => (
+              <article key={tutor.slug} className="overflow-hidden rounded-3xl bg-white shadow-sm">
+                <div className="relative flex h-48 items-center justify-center bg-orange-100">
+                  <img src={tutor.image} alt={tutor.name} className="size-32 rounded-full object-cover ring-8 ring-white/60" />
+                  <span className="absolute right-3 top-3 rounded-full bg-white px-3 py-1 text-xs font-bold text-orange-600">{tutor.tag}</span>
+                </div>
+                <div className="p-5">
+                  <div className="flex items-start justify-between gap-2">
+                    <div>
+                      <h3 className="text-lg">
+                        <a href={`/gia-su/${tutor.slug}`}>{tutor.name}</a>
+                      </h3>
+                      <p className="mt-1 text-sm font-semibold text-orange-600">{tutor.subject}</p>
+                    </div>
+                    <span className="flex items-center gap-1 text-sm font-bold">
+                      <Star className="size-4 fill-yellow-400 text-yellow-400" aria-hidden />
+                      {tutor.rating}
+                    </span>
+                  </div>
+                  <p className="mt-3 text-sm text-slate-500">
+                    {tutor.school}
+                    <br />
+                    {tutor.experience}
+                  </p>
+                  <div className="mt-4 flex items-center justify-between border-t border-slate-100 pt-4">
+                    <span className="text-sm">
+                      Từ <strong>{tutor.price}</strong>
+                      <br />
+                      <small className="text-slate-400">/ buổi</small>
+                    </span>
+                    <Button size="sm" variant="outline" href={`/gia-su/${tutor.slug}`}>
+                      Xem hồ sơ
+                    </Button>
+                  </div>
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section id="hoc-phi" className="container py-24">
+        <SectionTitle eyebrow="HỌC PHÍ THAM KHẢO" title="Đầu tư xứng đáng cho tương lai" description="Mức phí linh hoạt theo môn học, cấp lớp và hình thức học. Đăng ký gói tháng tiết kiệm đến 15%." />
+        <div className="grid gap-5 md:grid-cols-3">
+          {plans.map((plan) => (
+            <div key={plan.name} className={plan.featured ? 'rounded-3xl border border-orange-400 bg-orange-500 p-7 text-white shadow-xl shadow-orange-200' : 'rounded-3xl border border-orange-100 bg-white p-7'}>
+              <p className={plan.featured ? 'text-orange-100' : 'text-orange-600'}>{plan.name}</p>
+              <div className="my-5 text-3xl font-black">{plan.price}</div>
+              <p className={plan.featured ? 'text-orange-100' : 'text-slate-500'}>{plan.unit}</p>
+              <div className="my-6 h-px bg-current opacity-10" />
+              <p className="flex gap-2 text-sm"><Check aria-hidden /> Tại nhà hoặc online 1-1</p>
+              <p className="mt-3 flex gap-2 text-sm"><Check aria-hidden /> Học thử miễn phí</p>
+              <Button className="mt-7 w-full" variant={plan.featured ? 'dark' : 'outline'} href="/#dang-ky">
+                Nhận báo giá phù hợp
+              </Button>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section className="bg-slate-900 py-24 text-white">
+        <div className="container">
+          <SectionTitle light eyebrow="NHỮNG CON SỐ BIẾT NÓI" title="Cùng con tạo nên bước tiến mới" />
+          <div className="grid grid-cols-2 gap-8 text-center lg:grid-cols-4">
+            {stats.map(([value, label]) => (
+              <div key={label}>
+                <strong className="text-4xl font-black text-orange-400 sm:text-5xl">{value}</strong>
+                <p className="mt-2 text-sm text-slate-300">{label}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="container py-24">
+        <SectionTitle eyebrow="CẢM NHẬN" title="Phụ huynh nói gì về Gia Sư PML" />
+        <div className="grid gap-5 md:grid-cols-2">
+          {testimonials.map((item) => (
+            <figure key={item.name} className="rounded-3xl border border-orange-100 bg-white p-7 shadow-sm">
+              <div className="mb-5 flex gap-1 text-yellow-400" aria-label="5 sao">
+                {[1, 2, 3, 4, 5].map((star) => (
+                  <Star key={star} className="size-4 fill-current" aria-hidden />
+                ))}
+              </div>
+              <blockquote className="text-lg leading-8 text-slate-700">“{item.quote}”</blockquote>
+              <figcaption className="mt-6 flex items-center gap-3">
+                <img src={item.image} alt="" className="size-11 rounded-full object-cover" />
+                <div>
+                  <strong className="block">{item.name}</strong>
+                  <span className="text-sm text-slate-500">{item.detail}</span>
+                </div>
+              </figcaption>
+            </figure>
+          ))}
+        </div>
+      </section>
+
+      <section id="faq" className="bg-white py-24">
+        <div className="container">
+          <SectionTitle eyebrow="HỎI ĐÁP" title="Bạn đang băn khoăn điều gì?" />
+          <div className="mx-auto max-w-3xl rounded-3xl border border-orange-100 bg-[#fffaf5] px-6">
+            <Accordion>
+              {faqs.map(([question, answer]) => (
+                <AccordionItem key={question} question={question}>
+                  {answer}
+                </AccordionItem>
+              ))}
+            </Accordion>
+          </div>
+        </div>
+      </section>
+
+      <section id="tin-tuc" className="container py-24">
+        <SectionTitle eyebrow="TIN TỨC & KINH NGHIỆM" title="Góc học tập cho cả nhà" />
+        <div className="grid gap-5 md:grid-cols-3">
+          {news.map((item, index) => (
+            <article key={item.slug} className="overflow-hidden rounded-3xl bg-white shadow-sm">
+              <div className={`flex h-44 items-center justify-center text-5xl ${index === 0 ? 'bg-orange-100' : index === 1 ? 'bg-blue-100' : 'bg-teal-100'}`} aria-hidden>
+                {index === 0 ? '✎' : index === 1 ? '★' : '◌'}
+              </div>
+              <div className="p-5">
+                <span className="text-xs font-bold uppercase text-orange-600">
+                  {item.category} · {item.date}
+                </span>
+                <h3 className="mt-3 leading-7">
+                  <a href={`/tin-tuc/${item.slug}`}>{item.title}</a>
+                </h3>
+                <p className="mt-2 text-sm leading-6 text-slate-500">{item.excerpt}</p>
+                <a href={`/tin-tuc/${item.slug}`} className="mt-4 inline-flex items-center gap-1 text-sm font-bold text-orange-600">
+                  Đọc tiếp <ArrowRight className="size-4" aria-hidden />
+                </a>
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="bg-orange-500 py-16">
+        <div className="container flex flex-col items-start justify-between gap-7 md:flex-row md:items-center">
+          <div>
+            <p className="font-bold text-orange-100">SẴN SÀNG ĐỂ CON TIẾN BỘ?</p>
+            <h2 className="mt-2 text-white">
+              Gọi hoặc nhắn Zalo — nhận tư vấn
+              <br className="hidden sm:block" /> và học thử miễn phí
+            </h2>
+          </div>
+          <Button variant="dark" size="lg" href="/#dang-ky">
+            Liên hệ ngay <ArrowRight aria-hidden />
+          </Button>
+        </div>
+      </section>
+    </main>
+  )
+}
