@@ -2,8 +2,8 @@ export const siteConfig = {
   name: 'Gia Sư PML',
   title: 'Gia Sư PML | Tìm gia sư phù hợp cho con',
   description: 'Kết nối gia đình với gia sư chất lượng cao, học thử miễn phí và tiến bộ rõ rệt.',
-  hotline: '0909 123 456',
-  email: 'hello@giasusaoviet.vn',
+  hotline: '0908 985 844',
+  email: 'hello@giasupml.vn',
   address: 'Tầng 3, 18 Nguyễn Thị Minh Khai, Quận 1, TP. Hồ Chí Minh',
   nav: [
     ['Giới thiệu', '/#gioi-thieu'],

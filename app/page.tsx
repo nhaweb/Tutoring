@@ -4,6 +4,7 @@ import { subjects, tutors, testimonials, faqs, news } from '@/data/content'
 import { Button } from '@/components/ui/button'
 import { Accordion, AccordionItem } from '@/components/ui/accordion'
 import { RequestForm } from '@/components/request-form'
+import { SubjectIcon } from '@/components/subject-icon'
 
 export const metadata: Metadata = {
   alternates: { canonical: '/' },
@@ -95,7 +96,7 @@ export default function Page() {
             </div>
           </div>
         </div>
-        <div id="dang-ky" className="container relative z-10 -mb-16">
+        <div id="dang-ky" className="container relative z-10 -mb-10">
           <RequestForm />
         </div>
       </section>
@@ -104,8 +105,8 @@ export default function Page() {
         <SectionTitle eyebrow="MÔN HỌC & CẤP LỚP" title="Học gì cũng có gia sư giỏi" description="Từ kiến thức nền tảng đến luyện thi chuyên sâu, chúng tôi tìm đúng người thầy cho mục tiêu của bạn." />
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {subjects.map((subject) => (
-            <a key={subject.name} href="/#dang-ky" className="group rounded-3xl border border-orange-100 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-xl hover:shadow-orange-100">
-              <div className={`mb-5 flex size-14 items-center justify-center rounded-2xl text-xl font-black ${subjectTone[subject.color] ?? subjectTone.orange}`}>{subject.icon}</div>
+            <a key={subject.name} href={`/?mon=${encodeURIComponent(subject.name)}#dang-ky`} className="group rounded-3xl border border-orange-100 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-xl hover:shadow-orange-100">
+              <div className={`mb-5 flex size-14 items-center justify-center rounded-2xl text-xl font-black ${subjectTone[subject.color] ?? subjectTone.orange}`}><SubjectIcon name={subject.name} className="size-6" /></div>
               <div className="flex items-center justify-between">
                 <div>
                   <h3>{subject.name}</h3>
