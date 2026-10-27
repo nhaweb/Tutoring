@@ -1,4 +1,4 @@
-@import 'tailwindcss';
+﻿@import 'tailwindcss';
 @import 'tw-animate-css';
 @import 'shadcn/tailwind.css';
 @theme inline { --color-background: var(--background); --color-foreground: var(--foreground); --color-border: var(--border); --color-ring: var(--ring); --color-primary: var(--primary); --color-primary-foreground: var(--primary-foreground); --color-orange-400: #efb06a; --color-orange-500: #e8913a; --color-orange-600: #d47828; --color-orange-700: #b8621f; --radius-lg: 1rem; --radius-xl: 1.5rem; }
@@ -18,7 +18,6 @@ a:hover { color: #d47828; }
 .hero-art:before,.hero-art:after { content:''; position:absolute; border-radius:50%; background:#e8913a; opacity:.10; }
 .hero-art:before { width:340px; height:340px; right:-80px; top:-80px; }
 .hero-art:after { width:240px; height:240px; left:-90px; bottom:-90px; }
-.hero-person { position:absolute; inset:0; margin:auto; width:210px; height:270px; border-radius:110px 110px 34px 34px; background:#fff; display:flex; flex-direction:column; align-items:center; justify-content:center; box-shadow:0 30px 50px #d47e3a22; }
 .field { min-height:48px; width:100%; border:1px solid #e7e5e4; border-radius:14px; background:#fff; padding:0 14px; color:#334155; outline:none; font-size:16px; }
 .field:focus { border-color:#e8913a; box-shadow:0 0 0 3px #e8913a22; }
 details > summary { list-style: none; }

@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { ArrowRight, BookOpen, Check, ChevronRight, Clock3, GraduationCap, HeartHandshake, MessageCircle, Play, ShieldCheck, Star, Zap } from 'lucide-react'
+import { ArrowRight, BookOpen, Check, ChevronRight, Clock3, HeartHandshake, MessageCircle, Play, ShieldCheck, Star, Zap } from 'lucide-react'
 import { subjects, tutors, testimonials, faqs, news } from '@/data/content'
 import { Button } from '@/components/ui/button'
 import { Accordion, AccordionItem } from '@/components/ui/accordion'
@@ -92,11 +92,6 @@ export default function Page() {
             <div className="hero-art">
               <img src="/images/gia-su-pml-hero.png" alt="Gia sư PML đang hướng dẫn học viên" className="absolute inset-0 size-full object-cover opacity-90" />
               <div className="absolute inset-0 bg-gradient-to-t from-orange-950/20 via-transparent to-white/10" />
-              <div className="hero-person">
-                <GraduationCap className="size-24 text-orange-500" aria-hidden />
-                <div className="mt-3 h-3 w-28 rounded-full bg-orange-200" />
-                <div className="mt-2 h-2 w-20 rounded-full bg-slate-200" />
-              </div>
             </div>
           </div>
         </div>
