@@ -3,11 +3,11 @@
 import * as React from 'react'
 import { ArrowRight, Phone } from 'lucide-react'
 import { gradeOptions, studyModes, subjects } from '@/data/content'
-import { isValidVnPhone, type ContactDraft } from '@/lib/contact'
+import { isValidVnPhone, mailtoHref, type ContactDraft } from '@/lib/contact'
 import { Button } from '@/components/ui/button'
 import { ContactLinks } from '@/components/contact-links'
 
-const emptyDraft: ContactDraft = { name: '', phone: '', grade: '', subject: '', mode: '' }
+const emptyDraft: ContactDraft = { name: '', phone: '', grade: '', subject: '', mode: studyModes[0] }
 
 export function RequestForm() {
   const [draft, setDraft] = React.useState<ContactDraft>(emptyDraft)
@@ -52,6 +52,7 @@ export function RequestForm() {
     }
     setError('')
     setReady(true)
+    window.location.href = mailtoHref(draft)
   }
 
   return (
@@ -62,7 +63,7 @@ export function RequestForm() {
         </div>
         <div>
           <h3 className="text-lg font-extrabold">Nhận tư vấn miễn phí</h3>
-          <p className="text-sm text-slate-500">Điền thông tin, rồi gọi, nhắn Zalo hoặc gửi email. Website không lưu yêu cầu.</p>
+          <p className="text-sm text-slate-500">Điền thông tin rồi gửi — mở email soạn sẵn, hoặc gọi / nhắn Zalo. Website không lưu yêu cầu.</p>
         </div>
       </div>
       <form onSubmit={onSubmit} noValidate className="grid gap-3 sm:grid-cols-2">
@@ -114,14 +115,16 @@ export function RequestForm() {
         <label className="grid gap-1.5 text-sm font-semibold text-slate-700 sm:col-span-2">
           Hình thức học
           <select required name="mode" value={draft.mode} onChange={(event) => update('mode', event.target.value)} className="field font-normal">
-            <option value="">Chọn hình thức</option>
             {studyModes.map((mode) => (
-              <option key={mode}>{mode}</option>
+              <option key={mode} value={mode}>
+                {mode}
+              </option>
             ))}
           </select>
+          <span className="text-xs font-normal text-slate-500">Online 1-1 học qua Microsoft Teams (invite ngoài website).</span>
         </label>
         <Button type="submit" size="lg" className="w-full sm:col-span-2">
-          Xem cách liên hệ <ArrowRight aria-hidden />
+          Gửi yêu cầu tư vấn <ArrowRight aria-hidden />
         </Button>
         {error ? (
           <p role="alert" className="text-sm text-red-600 sm:col-span-2">
@@ -131,8 +134,8 @@ export function RequestForm() {
       </form>
       {ready ? (
         <div ref={panelRef} className="mt-4 rounded-2xl bg-orange-50 p-4 text-slate-700">
-          <p className="font-bold text-slate-900">Chưa gửi đi — website không lưu form.</p>
-          <p className="mt-1 text-sm leading-6">Hãy gọi, nhắn Zalo hoặc mở email. Email sẽ soạn sẵn nội dung bên dưới. Khi nhắn Zalo, hãy gửi kèm các dòng này.</p>
+          <p className="font-bold text-slate-900">Đã mở email soạn sẵn — website không lưu form.</p>
+          <p className="mt-1 text-sm leading-6">Nếu email không mở, hãy gọi hoặc nhắn Zalo và gửi kèm thông tin bên dưới. Online 1-1 sẽ được mời qua Microsoft Teams sau khi tư vấn.</p>
           <ul className="mt-3 space-y-1 text-sm">
             <li>Họ tên: {draft.name.trim()}</li>
             <li>Số điện thoại: {draft.phone.trim()}</li>

@@ -44,7 +44,7 @@ export function mailtoHref(draft?: Partial<ContactDraft>, intent: ContactIntent 
           'Môn có thể dạy:',
           'Khu vực:',
           'Số điện thoại:',
-          'Hình thức: Tại nhà / Online 1-1',
+          'Hình thức: Tại nhà / Online 1-1 (Microsoft Teams)',
         ]
       : [
           'Xin chào Gia Sư PML,',

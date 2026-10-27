@@ -8,7 +8,7 @@ export const subjects = [
 ]
 
 export const gradeOptions = ['Tiểu học', 'THCS', 'THPT', 'Luyện thi đại học'] as const
-export const studyModes = ['Tại nhà', 'Online 1-1'] as const
+export const studyModes = ['Online 1-1 (Microsoft Teams)', 'Tại nhà'] as const
 
 export const tutors = [
   {
@@ -73,10 +73,11 @@ export const testimonials = [
 export const news = [
   { slug: 'bi-quyet-giup-con-tu-giac-hoc-tap', title: 'Bí quyết giúp con tự giác học tập mỗi ngày', category: 'Phương pháp học', date: '12/06/2024', excerpt: 'Những thói quen nhỏ và cách đồng hành đúng lúc giúp con chủ động hơn trong từng giờ học.', body: 'Tự giác không đến từ việc ép con ngồi vào bàn thật lâu. Gia đình nên cùng con chia mục tiêu thành những bước nhỏ, thống nhất khung giờ ổn định và ghi nhận nỗ lực thay vì chỉ nhìn vào điểm số. Khi được trao quyền lựa chọn môn học hoặc cách ôn tập, con sẽ dần hình thành cảm giác làm chủ việc học.' },
   { slug: 'lo-trinh-on-thi-vao-10', title: 'Lộ trình ôn thi vào 10 hiệu quả', category: 'Luyện thi', date: '05/06/2024', excerpt: 'Gợi ý cách xây nền tảng, luyện đề và giữ tinh thần ổn định trong giai đoạn nước rút.', body: 'Một lộ trình tốt nên bắt đầu bằng việc rà soát kiến thức nền, sau đó luyện theo từng chuyên đề và chỉ làm đề tổng hợp khi đã nắm chắc phương pháp. Hãy dành một buổi mỗi tuần để xem lại lỗi sai, điều chỉnh lịch học và giữ thời gian nghỉ ngơi hợp lý.' },
-  { slug: 'hoc-online-1-1-dat-hieu-qua', title: 'Học online 1-1: Làm sao để đạt hiệu quả?', category: 'Kinh nghiệm', date: '28/05/2024', excerpt: 'Chuẩn bị không gian, thiết bị và thói quen tương tác để mỗi buổi học online thật tập trung.', body: 'Học online 1-1 hiệu quả khi học viên có góc học yên tĩnh, đường truyền ổn định và bật camera trong suốt buổi học. Gia sư nên xen kẽ câu hỏi, bài tập ngắn và phản hồi trực tiếp để duy trì sự tập trung và giúp phụ huynh dễ dàng theo dõi tiến bộ.' },
+  { slug: 'hoc-online-1-1-dat-hieu-qua', title: 'Học online 1-1: Làm sao để đạt hiệu quả?', category: 'Kinh nghiệm', date: '28/05/2024', excerpt: 'Chuẩn bị không gian, thiết bị và thói quen tương tác để mỗi buổi học online thật tập trung.', body: 'Học online 1-1 tại Gia Sư PML diễn ra qua Microsoft Teams (lời mời gửi ngoài website). Buổi học hiệu quả khi học viên có góc học yên tĩnh, đường truyền ổn định và bật camera. Gia sư xen kẽ câu hỏi, bài tập ngắn và phản hồi trực tiếp để duy trì tập trung.' },
 ]
 
 export const faqs = [
+  ['Học Online 1-1 diễn ra thế nào?', 'Buổi học online diễn ra qua Microsoft Teams. Sau khi đăng ký, Gia Sư PML gửi lời mời Teams (invite ngoài website) và theo dõi giờ học bên ngoài app — không có phòng học tích hợp trên web.'],
   ['Gia sư có được xác minh hồ sơ không?', 'Tất cả gia sư đều trải qua 3 bước sàng lọc: kiểm tra hồ sơ, phỏng vấn chuyên môn và xác minh bằng cấp.'],
   ['Tôi được học thử trong bao lâu?', 'Mỗi học viên được học thử miễn phí 1 buổi 90 phút để đánh giá sự phù hợp trước khi quyết định.'],
   ['Có thể đổi gia sư không?', 'Có. Gia Sư PML hỗ trợ đổi gia sư hoàn toàn miễn phí nếu gia đình cảm thấy chưa phù hợp.'],
@@ -100,7 +101,7 @@ export const privacyPolicy = {
     {
       heading: 'Thông tin bạn tự gửi',
       paragraphs: [
-        'Khi liên hệ, bạn có thể chia sẻ họ tên, số điện thoại, lớp, môn học và hình thức học (tại nhà hoặc online 1-1). Những nội dung đó nằm trong cuộc gọi, cuộc trò chuyện Zalo hoặc email.',
+        'Khi liên hệ, bạn có thể chia sẻ họ tên, số điện thoại, lớp, môn học và hình thức học (tại nhà hoặc online 1-1 qua Microsoft Teams). Những nội dung đó nằm trong cuộc gọi, cuộc trò chuyện Zalo hoặc email.',
         'Thông tin của bạn chỉ được sử dụng để tư vấn và kết nối gia sư, tuyệt đối không chia sẻ cho bên thứ ba.',
       ],
     },
@@ -127,7 +128,7 @@ export const termsOfService = {
     {
       heading: 'Dịch vụ',
       paragraphs: [
-        'Gia Sư PML kết nối gia đình với gia sư dạy kèm tại nhà hoặc online 1-1. Website cung cấp thông tin để bạn chủ động gọi, nhắn Zalo hoặc gửi email. Gửi form trên web không tạo hợp đồng và không được lưu thành đơn.',
+        'Gia Sư PML kết nối gia đình với gia sư dạy kèm tại nhà hoặc online 1-1 qua Microsoft Teams (invite ngoài site). Website cung cấp thông tin để bạn chủ động gọi, nhắn Zalo hoặc gửi email. Gửi form mở email/điện thoại — không lưu đơn trên web.',
       ],
     },
     {
@@ -173,8 +174,8 @@ export const termsOfService = {
 
 export const recruitment = {
   title: 'Tuyển dụng gia sư',
-  description: 'Gia Sư PML tìm gia sư dạy kèm tại nhà và online 1-1. Ứng tuyển bằng điện thoại, Zalo hoặc email — không có đơn lưu trên website.',
-  intro: 'Chúng tôi đang nhận gia sư các môn phổ thông và năng khiếu, dạy tại nhà hoặc online 1-1. Hồ sơ được xem cùng quy trình sàng lọc đã công bố với phụ huynh.',
+  description: 'Gia Sư PML tìm gia sư dạy kèm tại nhà và online 1-1 qua Microsoft Teams. Ứng tuyển bằng điện thoại, Zalo hoặc email — không có đơn lưu trên website.',
+  intro: 'Chúng tôi đang nhận gia sư các môn phổ thông và năng khiếu, dạy tại nhà hoặc online 1-1 qua Microsoft Teams. Hồ sơ được xem cùng quy trình sàng lọc đã công bố với phụ huynh.',
   requirements: [
     'Dạy được ít nhất một môn đang giới thiệu trên website, đúng cấp lớp bạn đăng ký.',
     'Có hồ sơ rõ: trường đang học hoặc đã tốt nghiệp, bằng cấp hoặc chứng chỉ liên quan.',
