@@ -1,57 +1,66 @@
 'use client'
 
 import * as React from 'react'
-import { ArrowRight, Phone } from 'lucide-react'
-import { gradeOptions, studyModes, subjects } from '@/data/content'
-import { isValidVnPhone, type ContactDraft } from '@/lib/contact'
+import { ArrowRight, Mail, Phone } from 'lucide-react'
+import { submitConsultRequest } from '@/app/actions/consult'
+import { defaultStudyMode, gradeOptions, studyModes, subjects } from '@/data/content'
+import { consultFieldError, isValidVnPhone, type ContactDraft } from '@/lib/contact'
 import { Button } from '@/components/ui/button'
-import { ContactLinks } from '@/components/contact-links'
 
-const emptyDraft: ContactDraft = { name: '', phone: '', grade: '', subject: '', mode: '' }
+const emptyDraft: ContactDraft = { name: '', phone: '', grade: '', subject: '', mode: defaultStudyMode }
+
+function openMailto(href: string) {
+  window.location.href = href
+}
 
 export function RequestForm() {
   const [draft, setDraft] = React.useState<ContactDraft>(emptyDraft)
   const [error, setError] = React.useState('')
-  const [ready, setReady] = React.useState(false)
+  const [pending, setPending] = React.useState(false)
+  const [handoff, setHandoff] = React.useState<{ mailto: string; email: string; opened: boolean } | null>(null)
   const panelRef = React.useRef<HTMLDivElement>(null)
 
   React.useEffect(() => {
-    if (ready) panelRef.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
-  }, [ready])
+    if (handoff) panelRef.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
+  }, [handoff])
 
   function update(field: keyof ContactDraft, value: string) {
+    setHandoff(null)
     setDraft((current) => ({ ...current, [field]: value }))
   }
 
-  function onSubmit(event: React.FormEvent<HTMLFormElement>) {
+  async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
-    if (!draft.name.trim()) {
-      setReady(false)
-      setError('Vui lòng nhập tên phụ huynh hoặc học viên.')
+    const fieldError = consultFieldError(draft)
+    if (fieldError) {
+      setHandoff(null)
+      setError(fieldError)
       return
     }
-    if (!isValidVnPhone(draft.phone)) {
-      setReady(false)
-      setError('Vui lòng nhập số điện thoại hợp lệ, ví dụ 0909123456.')
-      return
-    }
-    if (!draft.grade) {
-      setReady(false)
-      setError('Vui lòng chọn lớp của học viên.')
-      return
-    }
-    if (!draft.subject) {
-      setReady(false)
-      setError('Vui lòng chọn môn học.')
-      return
-    }
-    if (!draft.mode) {
-      setReady(false)
-      setError('Vui lòng chọn hình thức học.')
-      return
-    }
+
+    const normalized = { ...draft, name: draft.name.trim(), phone: draft.phone.replace(/\s+/g, '') }
     setError('')
-    setReady(true)
+    setPending(true)
+    try {
+      const result = await submitConsultRequest(normalized)
+      if (!result.ok) {
+        setHandoff(null)
+        setError(result.error)
+        return
+      }
+      let opened = true
+      try {
+        openMailto(result.mailto)
+      } catch {
+        opened = false
+      }
+      setHandoff({ mailto: result.mailto, email: result.email, opened })
+    } catch {
+      setHandoff(null)
+      setError('Không gửi được yêu cầu. Hãy thử lại hoặc gọi hotline.')
+    } finally {
+      setPending(false)
+    }
   }
 
   return (
@@ -62,7 +71,7 @@ export function RequestForm() {
         </div>
         <div>
           <h3 className="text-lg font-extrabold">Nhận tư vấn miễn phí</h3>
-          <p className="text-sm text-slate-500">Điền thông tin, rồi gọi, nhắn Zalo hoặc gửi email. Website không lưu yêu cầu.</p>
+          <p className="text-sm text-slate-500">Điền thông tin để mở email soạn sẵn. Gia Sư PML nhận yêu cầu khi bạn bấm Gửi trong thư.</p>
         </div>
       </div>
       <form onSubmit={onSubmit} noValidate className="grid gap-3 sm:grid-cols-2">
@@ -114,14 +123,20 @@ export function RequestForm() {
         <label className="grid gap-1.5 text-sm font-semibold text-slate-700 sm:col-span-2">
           Hình thức học
           <select required name="mode" value={draft.mode} onChange={(event) => update('mode', event.target.value)} className="field font-normal">
-            <option value="">Chọn hình thức</option>
             {studyModes.map((mode) => (
-              <option key={mode}>{mode}</option>
+              <option key={mode} value={mode}>
+                {mode}
+              </option>
             ))}
           </select>
+          <span className="text-xs font-normal leading-5 text-slate-500">
+            {draft.mode === defaultStudyMode
+              ? 'Lời mời Microsoft Teams được gửi bên ngoài website. Trang này không có phòng học.'
+              : 'Gia sư học trực tiếp tại nhà. Website không mở phòng học.'}
+          </span>
         </label>
-        <Button type="submit" size="lg" className="w-full sm:col-span-2">
-          Xem cách liên hệ <ArrowRight aria-hidden />
+        <Button type="submit" size="lg" className="w-full sm:col-span-2" disabled={pending}>
+          {pending ? 'Đang mở email…' : 'Gửi yêu cầu tư vấn'} <ArrowRight aria-hidden />
         </Button>
         {error ? (
           <p role="alert" className="text-sm text-red-600 sm:col-span-2">
@@ -129,10 +144,15 @@ export function RequestForm() {
           </p>
         ) : null}
       </form>
-      {ready ? (
-        <div ref={panelRef} className="mt-4 rounded-2xl bg-orange-50 p-4 text-slate-700">
-          <p className="font-bold text-slate-900">Chưa gửi đi — website không lưu form.</p>
-          <p className="mt-1 text-sm leading-6">Hãy gọi, nhắn Zalo hoặc mở email. Email sẽ soạn sẵn nội dung bên dưới. Khi nhắn Zalo, hãy gửi kèm các dòng này.</p>
+      {handoff ? (
+        <div ref={panelRef} role="status" className="mt-4 rounded-2xl bg-emerald-50 p-4 text-slate-700">
+          <p className="font-bold text-slate-900">{handoff.opened ? 'Đã mở email soạn sẵn' : 'Email đã soạn sẵn'}</p>
+          <p className="mt-1 text-sm leading-6">
+            {handoff.opened
+              ? `Thư gửi tới ${handoff.email} đã được mở với nội dung tư vấn.`
+              : `Không tự mở được thư tới ${handoff.email}. Hãy bấm “Mở lại email”.`}{' '}
+            Gia Sư PML chỉ nhận được yêu cầu sau khi bạn bấm Gửi trong ứng dụng thư. Website không lưu form.
+          </p>
           <ul className="mt-3 space-y-1 text-sm">
             <li>Họ tên: {draft.name.trim()}</li>
             <li>Số điện thoại: {draft.phone.trim()}</li>
@@ -141,7 +161,9 @@ export function RequestForm() {
             <li>Hình thức học: {draft.mode}</li>
           </ul>
           <div className="mt-4">
-            <ContactLinks draft={draft} />
+            <Button href={handoff.mailto} size="lg" variant="dark" className="w-full sm:w-auto">
+              <Mail aria-hidden /> Mở lại email
+            </Button>
           </div>
         </div>
       ) : null}
