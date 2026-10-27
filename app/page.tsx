@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { ArrowRight, Award, BookOpen, Check, ChevronRight, Clock3, GraduationCap, HeartHandshake, MessageCircle, Play, ShieldCheck, Star, Zap } from 'lucide-react'
+import { ArrowRight, BookOpen, Check, ChevronRight, Clock3, HeartHandshake, MessageCircle, Play, ShieldCheck, Star, Zap } from 'lucide-react'
 import { subjects, tutors, testimonials, faqs, news } from '@/data/content'
 import { Button } from '@/components/ui/button'
 import { Accordion, AccordionItem } from '@/components/ui/accordion'
@@ -14,7 +14,7 @@ const features = [
   { icon: ShieldCheck, title: 'Sàng lọc kỹ lưỡng', description: '100% gia sư có hồ sơ và bằng cấp xác minh' },
   { icon: BookOpen, title: 'Giáo trình cá nhân hóa', description: 'Lộ trình riêng theo năng lực và mục tiêu' },
   { icon: MessageCircle, title: 'Báo cáo hàng tuần', description: 'Phụ huynh luôn nắm được tiến độ của con' },
-  { icon: Clock3, title: 'Lịch học linh hoạt', description: 'Chủ động chọn thời gian và hình thức học' },
+  { icon: Clock3, title: 'Lịch học linh hoạt', description: 'Học tại nhà hoặc Online 1-1 qua Microsoft Teams' },
   { icon: HeartHandshake, title: 'Học thử miễn phí', description: 'Trải nghiệm trước khi đưa ra quyết định' },
   { icon: Zap, title: 'Hỗ trợ 24/7', description: 'Đồng hành nhanh chóng trong suốt hành trình' },
 ]
@@ -48,12 +48,24 @@ const subjectTone: Record<string, string> = {
   yellow: 'bg-yellow-100 text-yellow-600',
 }
 
-function SectionTitle({ eyebrow, title, description, light = false }: { eyebrow: string; title: string; description?: string; light?: boolean }) {
+function SectionTitle({ eyebrow, title, description, light = false, inline = false }: { eyebrow: string; title: string; description?: string; light?: boolean; inline?: boolean }) {
+  const descriptionClass = light ? 'mt-3 text-orange-50/80' : 'mt-3 text-slate-500'
+  if (inline) {
+    return (
+      <div className="mx-auto mb-12 max-w-5xl text-center">
+        <h2 className={`team-heading ${light ? 'text-white' : 'text-slate-900'}`}>
+          <span className="team-eyebrow">{eyebrow}</span>
+          {title}
+        </h2>
+        {description ? <p className={descriptionClass}>{description}</p> : null}
+      </div>
+    )
+  }
   return (
     <div className="mx-auto mb-12 max-w-2xl text-center">
       <p className={light ? 'text-orange-200' : 'text-orange-600'}>{eyebrow}</p>
       <h2 className={light ? 'text-white' : 'text-slate-900'}>{title}</h2>
-      {description ? <p className={light ? 'text-orange-50/80' : 'text-slate-500'}>{description}</p> : null}
+      {description ? <p className={descriptionClass}>{description}</p> : null}
     </div>
   )
 }
@@ -73,6 +85,7 @@ export default function Page() {
               <span className="text-orange-500">Con tiến bộ rõ rệt.</span>
             </h1>
             <p className="mt-6 max-w-xl text-lg leading-8 text-slate-600">Kết nối với gia sư chất lượng cao, được tuyển chọn kỹ lưỡng — học đúng phương pháp, tiến bộ bền vững.</p>
+            <p className="mt-3 max-w-xl text-base leading-7 text-slate-600">Học Online 1-1 qua Microsoft Teams. Gia Sư PML gửi lời mời trước buổi học — website không mở phòng học.</p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Button size="lg" href="/#dang-ky">
                 Đăng ký tìm gia sư <ArrowRight aria-hidden />
@@ -90,28 +103,7 @@ export default function Page() {
           </div>
           <div className="relative">
             <div className="hero-art">
-              <img src="/images/gia-su-pml-hero.png" alt="Gia sư PML đang hướng dẫn học viên" className="absolute inset-0 size-full object-cover opacity-90" />
-              <div className="absolute inset-0 bg-gradient-to-t from-orange-950/20 via-transparent to-white/10" />
-              <div className="absolute -left-5 top-8 hidden rounded-2xl bg-white p-4 shadow-xl sm:block">
-                <div className="flex items-center gap-3">
-                  <div className="flex size-10 items-center justify-center rounded-full bg-emerald-100 text-emerald-600">
-                    <Award aria-hidden />
-                  </div>
-                  <div>
-                    <strong className="block text-sm">Gia sư hàng đầu</strong>
-                    <span className="text-xs text-slate-400">Được phụ huynh tin chọn</span>
-                  </div>
-                </div>
-              </div>
-              <div className="absolute -bottom-5 -right-4 hidden rounded-2xl bg-slate-900 p-4 text-white shadow-xl sm:block">
-                <strong className="block text-2xl">98%</strong>
-                <span className="text-xs text-slate-300">Hài lòng sau học thử</span>
-              </div>
-              <div className="hero-person">
-                <GraduationCap className="size-24 text-orange-500" aria-hidden />
-                <div className="mt-3 h-3 w-28 rounded-full bg-orange-200" />
-                <div className="mt-2 h-2 w-20 rounded-full bg-slate-200" />
-              </div>
+              <img src="/images/gia-su-pml-hero.png" alt="Gia sư PML đang hướng dẫn học viên" className="absolute inset-0 size-full object-cover" />
             </div>
           </div>
         </div>
@@ -173,7 +165,7 @@ export default function Page() {
 
       <section id="gia-su" className="bg-[#fff1e4] py-24">
         <div className="container">
-          <SectionTitle eyebrow="ĐỘI NGŨ GIA SƯ" title="Những người thầy truyền cảm hứng" description="Tận tâm, giỏi chuyên môn và luôn biết cách giúp học viên yêu việc học." />
+          <SectionTitle inline eyebrow="ĐỘI NGŨ GIA SƯ" title="Những người thầy truyền cảm hứng" description="Tận tâm, giỏi chuyên môn và luôn biết cách giúp học viên yêu việc học." />
           <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-4">
             {tutors.map((tutor) => (
               <article key={tutor.slug} className="overflow-hidden rounded-3xl bg-white shadow-sm">
@@ -225,7 +217,7 @@ export default function Page() {
               <div className="my-5 text-3xl font-black">{plan.price}</div>
               <p className={plan.featured ? 'text-orange-100' : 'text-slate-500'}>{plan.unit}</p>
               <div className="my-6 h-px bg-current opacity-10" />
-              <p className="flex gap-2 text-sm"><Check aria-hidden /> Tại nhà hoặc online 1-1</p>
+              <p className="flex gap-2 text-sm"><Check aria-hidden /> Tại nhà hoặc Online 1-1 qua Microsoft Teams</p>
               <p className="mt-3 flex gap-2 text-sm"><Check aria-hidden /> Học thử miễn phí</p>
               <Button className="mt-7 w-full" variant={plan.featured ? 'dark' : 'outline'} href="/#dang-ky">
                 Nhận báo giá phù hợp

@@ -12,7 +12,7 @@ export function SiteHeader() {
   return (
     <header className="relative z-40 bg-white">
       <div className="hidden border-b border-orange-100 bg-[#fffaf5] sm:block">
-        <div className="container flex h-9 items-center justify-between text-xs text-slate-500">
+        <div className="container flex min-h-11 flex-wrap items-center justify-between gap-x-5 gap-y-1 py-2 text-sm font-medium text-slate-600">
           <span>Học thử miễn phí · Ghép gia sư trong 24h</span>
           <span className="flex gap-5">
             <a href={telHref()}>☎ {siteConfig.hotline}</a>
