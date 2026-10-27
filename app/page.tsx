@@ -153,11 +153,11 @@ export default function Page() {
 
       <section id="gia-su" className="bg-[#fff1e4] py-24">
         <div className="container">
-          <div className="mx-auto mb-12 max-w-3xl text-center">
-            <h2 className="text-slate-900">
+          <div className="mx-auto mb-12 max-w-5xl text-center">
+            <h2 className="flex flex-wrap items-baseline justify-center gap-x-2 gap-y-1 text-balance text-slate-900">
               <span className="text-orange-600">ĐỘI NGŨ GIA SƯ</span>
-              <span className="mx-2 hidden text-orange-300 sm:inline">·</span>
-              <span className="mt-2 block text-[clamp(1.35rem,3vw,2.2rem)] sm:mt-0 sm:inline">Những người thầy truyền cảm hứng</span>
+              <span className="text-orange-300" aria-hidden>·</span>
+              <span>Những người thầy truyền cảm hứng</span>
             </h2>
             <p className="mt-3 text-slate-500">Tận tâm, giỏi chuyên môn và luôn biết cách giúp học viên yêu việc học.</p>
           </div>
