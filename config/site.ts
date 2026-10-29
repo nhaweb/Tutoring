@@ -5,6 +5,11 @@ export const siteConfig = {
   hotline: '0908 985 844',
   email: 'hello@giasupml.vn',
   address: 'Tầng 3, 18 Nguyễn Thị Minh Khai, Quận 1, TP. Hồ Chí Minh',
+  social: [
+    { name: 'Facebook', href: 'https://www.facebook.com/pmlvietnam.vn' },
+    { name: 'YouTube', href: 'https://www.youtube.com/@pmlvietnam' },
+    { name: 'TikTok', href: 'https://www.tiktok.com/@pmlvietnam.vn' },
+  ],
   nav: [
     ['Giới thiệu', '/#gioi-thieu'],
     ['Môn học', '/#mon-hoc'],

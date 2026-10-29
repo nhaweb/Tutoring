@@ -147,7 +147,7 @@ function RequestFormInner() {
 
                 <div>
                   <label className="mb-2.5 block text-sm font-semibold text-slate-700">Hình thức</label>
-                  <div className="grid gap-3 sm:grid-cols-2">
+                  <div className="grid gap-3 sm:grid-cols-3">
                     {studyModes.map((mode) => (
                       <button
                         key={mode}

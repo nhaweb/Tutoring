@@ -8,7 +8,7 @@ export const subjects = [
 ]
 
 export const gradeOptions = ['Tiểu học', 'THCS', 'THPT', 'Luyện thi đại học'] as const
-export const studyModes = ['Online 1-1 (Microsoft Teams)', 'Tại nhà'] as const
+export const studyModes = ['Online 1-1 (Microsoft Teams)', 'Tại nhà', 'Học nhóm'] as const
 
 export const tutors = [
   {
