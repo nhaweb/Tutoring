@@ -51,7 +51,7 @@ const subjectTone: Record<string, string> = {
 
 function SectionTitle({ eyebrow, title, description, light = false }: { eyebrow: string; title: string; description?: string; light?: boolean }) {
   return (
-    <div className="mx-auto mb-12 max-w-2xl text-center">
+    <div className="mx-auto mb-8 max-w-2xl text-center md:mb-10">
       <p className={light ? 'text-orange-200' : 'text-orange-600'}>{eyebrow}</p>
       <h2 className={light ? 'text-white' : 'text-slate-900'}>{title}</h2>
       {description ? <p className={light ? 'text-orange-50/80' : 'text-slate-500'}>{description}</p> : null}
@@ -101,7 +101,7 @@ export default function Page() {
         </div>
       </section>
 
-      <section id="mon-hoc" className="container py-28">
+      <section id="mon-hoc" className="container pb-12 pt-20 md:pb-16 md:pt-24">
         <SectionTitle eyebrow="MÔN HỌC & CẤP LỚP" title="Học gì cũng có gia sư giỏi" description="Từ kiến thức nền tảng đến luyện thi chuyên sâu, chúng tôi tìm đúng người thầy cho mục tiêu của bạn." />
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {subjects.map((subject) => (
@@ -119,7 +119,7 @@ export default function Page() {
         </div>
       </section>
 
-      <section id="gioi-thieu" className="bg-white py-24">
+      <section id="gioi-thieu" className="bg-white py-12 md:py-16">
         <div className="container">
           <SectionTitle eyebrow="VÌ SAO CHỌN GIA SƯ PML" title="Mỗi giờ học đều đáng giá" description="Chúng tôi không chỉ tìm gia sư, mà xây dựng một hành trình học tập phù hợp cho từng học viên." />
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -139,7 +139,7 @@ export default function Page() {
         </div>
       </section>
 
-      <section className="container py-24">
+      <section className="container py-12 md:py-16">
         <SectionTitle eyebrow="QUY TRÌNH ĐƠN GIẢN" title="Bắt đầu chỉ với 4 bước" />
         <div className="grid gap-6 md:grid-cols-4">
           {steps.map(([number, title, description]) => (
@@ -152,9 +152,9 @@ export default function Page() {
         </div>
       </section>
 
-      <section id="gia-su" className="bg-[#fff1e4] py-24">
+      <section id="gia-su" className="bg-[#fff1e4] py-12 md:py-16">
         <div className="container">
-          <div className="mx-auto mb-12 max-w-5xl text-center">
+          <div className="mx-auto mb-8 max-w-5xl text-center md:mb-10">
             <h2 className="flex flex-wrap items-baseline justify-center gap-x-2 gap-y-1 text-balance text-slate-900">
               <span className="text-orange-600">ĐỘI NGŨ GIA SƯ</span>
               <span className="text-orange-300" aria-hidden>·</span>
@@ -204,7 +204,7 @@ export default function Page() {
         </div>
       </section>
 
-      <section id="hoc-phi" className="container py-24">
+      <section id="hoc-phi" className="container py-12 md:py-16">
         <SectionTitle eyebrow="HỌC PHÍ THAM KHẢO" title="Đầu tư xứng đáng cho tương lai" description="Mức phí linh hoạt theo môn học, cấp lớp và hình thức học. Đăng ký gói tháng tiết kiệm đến 15%." />
         <div className="grid gap-5 md:grid-cols-3">
           {plans.map((plan) => (
@@ -223,7 +223,7 @@ export default function Page() {
         </div>
       </section>
 
-      <section className="bg-slate-900 py-24 text-white">
+      <section className="bg-slate-900 py-12 md:py-16 text-white">
         <div className="container">
           <SectionTitle light eyebrow="NHỮNG CON SỐ BIẾT NÓI" title="Cùng con tạo nên bước tiến mới" />
           <div className="grid grid-cols-2 gap-8 text-center lg:grid-cols-4">
@@ -237,7 +237,7 @@ export default function Page() {
         </div>
       </section>
 
-      <section className="container py-24">
+      <section className="container py-12 md:py-16">
         <SectionTitle eyebrow="CẢM NHẬN" title="Phụ huynh nói gì về Gia Sư PML" />
         <div className="grid gap-5 md:grid-cols-2">
           {testimonials.map((item) => (
@@ -260,7 +260,7 @@ export default function Page() {
         </div>
       </section>
 
-      <section id="faq" className="bg-white py-24">
+      <section id="faq" className="bg-white py-12 md:py-16">
         <div className="container">
           <SectionTitle eyebrow="HỎI ĐÁP" title="Bạn đang băn khoăn điều gì?" />
           <div className="mx-auto max-w-3xl rounded-3xl border border-orange-100 bg-[#fffaf5] px-6">
@@ -275,7 +275,7 @@ export default function Page() {
         </div>
       </section>
 
-      <section id="tin-tuc" className="container py-24">
+      <section id="tin-tuc" className="container py-12 md:py-16">
         <SectionTitle eyebrow="TIN TỨC & KINH NGHIỆM" title="Góc học tập cho cả nhà" />
         <div className="grid gap-5 md:grid-cols-3">
           {news.map((item, index) => (
@@ -300,7 +300,7 @@ export default function Page() {
         </div>
       </section>
 
-      <section className="bg-orange-500 py-16">
+      <section className="bg-orange-500 py-10 md:py-12">
         <div className="container flex flex-col items-start justify-between gap-7 md:flex-row md:items-center">
           <div>
             <p className="font-bold text-orange-100">SẴN SÀNG ĐỂ CON TIẾN BỘ?</p>
